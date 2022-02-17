@@ -22,11 +22,6 @@ jobs:
       LC_ALL: ${{ matrix.locale }}
       LANG: ${{ matrix.locale }}
     steps:
-      - uses: pguyot/arm-runner-action@v2.1-dev
-        with:
-          base_image: ${{ matrix.base_image }}
-          cpu: ${{ matrix.cpu }}
-          commands: echo
       - uses: actions/checkout@v2
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -40,6 +35,11 @@ jobs:
         run: make bootstrap-dev-plugins
       - name: Run tests
         run: make tests
+      - uses: pguyot/arm-runner-action@v2.1-dev
+        with:
+          base_image: ${{ matrix.base_image }}
+          cpu: ${{ matrix.cpu }}
+          commands: make bundle
       - name: Create bundle
         run: make bundle
       - name: Test bundle
