@@ -9,7 +9,7 @@ on:
 
 jobs:
   release:
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.base_image }}
     strategy:
       matrix:
         arch: [aarch64]
