@@ -10,15 +10,21 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        arch: [aarch64]
         include:
-          - os: ubuntu-18.04
+          - base_image: raspi_4_bullseye:20220121
+            arch: aarch64
+            cpu: cortex-a53
             locale: C.UTF-8
-          - os: macos-10.15
-            locale: en_US.UTF-8
     env:
       LC_ALL: ${{ matrix.locale }}
       LANG: ${{ matrix.locale }}
     steps:
+      - uses: pguyot/arm-runner-action@v2.1-dev
+        with:
+          base_image: ${{ matrix.base_image }}
+          cpu: ${{ matrix.cpu }}
+          commands: echo
       - uses: actions/checkout@v2
       - name: Set up Python
         uses: actions/setup-python@v2
